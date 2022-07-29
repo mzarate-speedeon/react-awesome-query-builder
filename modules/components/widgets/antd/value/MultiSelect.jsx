@@ -46,10 +46,10 @@ export default class MultiSelectWidget extends PureComponent {
     if (val && !val.length) {
       val = undefined //not allow []
     }
-    //Split on separators, space or comma.
+    //Split on separators, space or comma, if allow custom values
     let newValues=[];
     let uniqueValues = {};
-    if (Array.isArray(val) && val.length > 0) {
+    if (Array.isArray(val) && val.length > 0 && this.props.allowCustomValues) {
       val.forEach(record => {
         let values = record.split(/[, ]+/);
         values.forEach(val => {
