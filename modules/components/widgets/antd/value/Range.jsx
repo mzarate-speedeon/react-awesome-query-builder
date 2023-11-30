@@ -101,7 +101,8 @@ export default class RangeWidget extends PureComponent {
           />
         </Col>
         <Col style={{float: "left", marginRight: "5px", lineHeight: "20px"}}>
-          <span>{ textSeparators[1] }</span>
+          {/* <span>{ textSeparators[1] }</span> */}
+          <span> ZZZ TO XYZ</span>
         </Col>
         <Col style={{float: "left", marginRight: "5px"}}>
           <InputNumber
