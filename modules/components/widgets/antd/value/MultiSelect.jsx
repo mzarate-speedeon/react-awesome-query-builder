@@ -28,6 +28,10 @@ export default class MultiSelectWidget extends PureComponent {
     this.onPropsChanged(props);
   }
 
+  componentDidUpdate() {
+    console.log("The multiselect was updated")
+  }
+
   onPropsChanged (props) {
     const {listValues} = props;
 

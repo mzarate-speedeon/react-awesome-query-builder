@@ -61,7 +61,7 @@ export default ({
     //minWidth: "100%"
   };
 
-  return (<>THIS IS BOOTSTRAP
+  return (
     <Dropdown
       isOpen={isOpen}
       onClick={() => (!isOpen ? setIsOpen(true) : setIsOpen(false))}
@@ -84,5 +84,5 @@ export default ({
         {renderOptions()}
       </DropdownMenu>
     </Dropdown>
-  </>);
+  );
 };

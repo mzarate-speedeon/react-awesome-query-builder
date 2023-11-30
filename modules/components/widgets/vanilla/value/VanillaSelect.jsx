@@ -11,7 +11,7 @@ export default ({listValues, value, setValue, allowCustomValues, readonly, custo
   const onChange = e => setValue(e.target.value);
   
   const hasValue = value != null;
-  return (<>THIS IS VANILLA
+  return (
     <select
       onChange={onChange}
       value={hasValue ? value : ""}
@@ -21,5 +21,5 @@ export default ({listValues, value, setValue, allowCustomValues, readonly, custo
       {!hasValue && <option disabled value={""}></option>}
       {renderOptions()}
     </select>
-  </>);
+  );
 };

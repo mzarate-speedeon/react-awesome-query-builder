@@ -58,7 +58,7 @@ export default class SelectWidget extends PureComponent {
     const aValue = value != undefined ? value+"" : undefined;
     const customSelectProps = omit(customProps, [""]);
 
-    return (<>THIS IS ANTD
+    return (
       <Select
         disabled={readonly}
         style={{ width }}
@@ -72,6 +72,6 @@ export default class SelectWidget extends PureComponent {
         {...customSelectProps}
       >{this.options}
       </Select>
-    </>);
+    );
   }
 }
