@@ -32,7 +32,7 @@ export default ({listValues, value, setValue, allowCustomValues, readonly, place
   
   const hasValue = value != null;
 
-  return (
+  return (<>THIS IS MUI
     <FormControl>
       <Select
         variant="standard"
@@ -50,5 +50,5 @@ export default ({listValues, value, setValue, allowCustomValues, readonly, place
         {renderOptions()}
       </Select>
     </FormControl>
-  );
+  </>);
 };

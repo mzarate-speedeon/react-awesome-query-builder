@@ -32,7 +32,7 @@ export default ({listValues, value, setValue, allowCustomValues, readonly, place
   
   const hasValue = value != null;
 
-  return (
+  return (<>THIS IS MATERIAL
     <FormControl>
       <Select
         autoWidth
@@ -48,5 +48,5 @@ export default ({listValues, value, setValue, allowCustomValues, readonly, place
         {renderOptions()}
       </Select>
     </FormControl>
-  );
+  </>);
 };
