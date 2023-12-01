@@ -301,7 +301,7 @@ class Rule extends PureComponent {
       
     return (
       <>
-        {/* {drag}
+        {drag}
         <div className="rule--body--wrapper something-like">
           {body}{error}
         </div>
@@ -310,8 +310,7 @@ class Rule extends PureComponent {
             {lock}
             {del}
           </BtnGrp>
-        </div> */}
-        <div>This is Sparta!!!!</div>
+        </div>
       </>
     );
   }

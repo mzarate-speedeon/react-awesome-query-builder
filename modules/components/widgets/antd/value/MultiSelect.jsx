@@ -86,26 +86,27 @@ export default class MultiSelectWidget extends PureComponent {
     const customSelectProps = omit(customProps, ["showCheckboxes"]);
     
     return (
-      <Select
-        disabled={readonly}
-        mode={allowCustomValues ? "tags" : "multiple"}
-        style={{
-          minWidth: width,
-          width: width,
-        }}
-        dropdownStyle={{
-          width: dropdownWidth,
-        }}
-        key={"widget-multiselect"}
-        dropdownMatchSelectWidth={false}
-        placeholder={placeholder}
-        size={renderSize}
-        value={aValue}
-        onChange={this.handleChange}
-        filterOption={this.filterOption}
-        {...customSelectProps}
-      >{this.options}
-      </Select>
+      // <Select
+      //   disabled={readonly}
+      //   mode={allowCustomValues ? "tags" : "multiple"}
+      //   style={{
+      //     minWidth: width,
+      //     width: width,
+      //   }}
+      //   dropdownStyle={{
+      //     width: dropdownWidth,
+      //   }}
+      //   key={"widget-multiselect"}
+      //   dropdownMatchSelectWidth={false}
+      //   placeholder={placeholder}
+      //   size={renderSize}
+      //   value={aValue}
+      //   onChange={this.handleChange}
+      //   filterOption={this.filterOption}
+      //   {...customSelectProps}
+      // >{this.options}
+      // </Select>
+      <div>This is Sparta!!!</div>
     );
   }
 }
