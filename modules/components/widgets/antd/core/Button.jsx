@@ -40,6 +40,6 @@ export default ({type, onClick, label, readonly, config: {settings}}) => {
       onClick={onClick}
       size={renderSize}
       disabled={readonly}
-    >{btnLabel} ZZZZZZ</Button>
+    >{btnLabel} XXYYZZ</Button>
   );
 };
