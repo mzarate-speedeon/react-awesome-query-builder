@@ -33,6 +33,8 @@ import confirm from "./core/confirm";
 import { ConfigProvider } from "antd";
 const Provider = ({ config, children }) => <ConfigProvider locale={config.settings.locale.antd}>{children}</ConfigProvider>;
 
+console.log("provider", Provider)
+
 export default {
   DateWidget,
   DateTimeWidget,
