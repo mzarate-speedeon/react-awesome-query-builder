@@ -96,14 +96,14 @@ export default class MultiSelectWidget extends PureComponent {
     let showModal = false;
     const toggleModal = () => {
       showModal = !showModal;
+      console.log("toggleModal clicked", showModal)
     }
     
     return (field === "ameps__dob_year" ? 
       <>
         {!readonly && <Button size="sm" className="btn-light" onClick={toggleModal}>+ Add Range</Button>}
         <span>{value}</span>
-        { <YearsSelector 
-           show={showModal}
+        { showModal && <YearsSelector
            toggle={toggleModal}
            addNew={(val) => this.handleChange(val)}
         />}
@@ -138,7 +138,7 @@ export default class MultiSelectWidget extends PureComponent {
  * Modal to select range of years
  * @returns 
  */
-export function YearsSelector({show, toggle, addNew}) {
+export function YearsSelector({toggle, addNew}) {
 
   const startYearRef = useRef(null);
   const endYearRef = useRef(null);
@@ -152,7 +152,7 @@ export function YearsSelector({show, toggle, addNew}) {
   }
 
   return (<>
-      <Modal isOpen={show} className="modal-dialog-centered date-picker">
+      <Modal isOpen={true} className="modal-dialog-centered date-picker">
         <ModalHeader>Select Year Range</ModalHeader>
         <ModalBody>
           <div className='input-range'>
