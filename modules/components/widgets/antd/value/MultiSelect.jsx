@@ -5,6 +5,7 @@ import {calcTextWidth, SELECT_WIDTH_OFFSET_RIGHT} from "../../../../utils/domUti
 import {mapListValues} from "../../../../utils/stuff";
 import {useOnPropsChanged} from "../../../../utils/reactUtils";
 import omit from "lodash/omit";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert, Input } from 'reactstrap';
 const Option = Select.Option;
 
 export default class MultiSelectWidget extends PureComponent {
@@ -91,7 +92,8 @@ export default class MultiSelectWidget extends PureComponent {
     const dropdownWidth = this.optionsMaxWidth + SELECT_WIDTH_OFFSET_RIGHT;
     const customSelectProps = omit(customProps, ["showCheckboxes"]);
     
-    return (field === "ameps__dob_year" ? <button>Year</button> :
+    return (field === "ameps__dob_year" ? 
+      <Button size="sm" className="btn-light">+ Add Range</Button> :
       <Select
         disabled={readonly}
         mode={allowCustomValues ? "tags" : "multiple"}
@@ -114,4 +116,48 @@ export default class MultiSelectWidget extends PureComponent {
       </Select>
     );
   }
+}
+
+
+/**
+ * Modal to select range of years
+ * @returns 
+ */
+export function YearsSelector({readonly}) {
+  return (<>
+    {!readonly && <><Button size="sm" className="btn-light" onClick={this.toggle}>+ Add {this.state.inputType} Range</Button>
+      <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-dialog-centered date-picker">
+        <ModalHeader toggle={this.toggle}>{chartType}</ModalHeader>
+        <ModalBody>
+          <div className='input-range'>
+            <div className='ir-start'>
+              <label>Start Value</label>
+              <Input
+                value={this.state.startValue}
+                onChange={(ev) => this.onInputChange(ev, 'start')}
+                max={this.state.endValue}
+              />
+            </div>
+            <i className="bi bi-arrow-right"></i>
+            <div className='ir-end'>
+              <label>End Value</label>
+              <Input
+                value={this.state.endValue}
+                onChange={(ev) => this.onInputChange(ev, 'end')}
+                max={this.state.endValue}
+              />
+            </div>
+          </div>
+          <Alert color="warning" fade isOpen={this.state.error}>
+            <i className="bi bi-exclamation-diamond"></i>
+            {this.state.errorMessage}
+          </Alert>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" size="sm" onClick={this.toggle}>Cancel</Button>
+          <Button color="primary" className="promote" size="sm" onClick={this.onRangeCommit}>Add {this.state.inputType} Range</Button>{' '}
+        </ModalFooter>
+      </Modal>
+    </>}
+  </>)
 }
