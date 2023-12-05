@@ -145,11 +145,32 @@ let currentDate = new Date();
 let currentYear = currentDate.getFullYear();
 let allYears = [];
 function populateYears() {
-  for (let i = (currentYear - 110); i <= currentYear; i++) {
+  for (let i = (currentYear - 110); i <= (currentYear - 18); i++) {
     allYears.push(i);
   }
 }
 populateYears();
+
+function getYearsBetween(start, end) {
+  let startYear = 0;
+  let endYear = 0;
+  let totalYears = 0;
+  let listOfYears = [];
+  if(parseInt(start) < parseInt(end)) {
+    startYear = start;
+    endYear = end;
+  } else { // invert the values
+    startYear = end;
+    endYear = start;
+  }
+  totalYears = parseInt(startYear) - parseInt(endYear);
+  if(totalYears > 0) {
+    for (let i = startYear; i <= totalYears; i++) {
+      listOfYears.push(start + i);
+    }
+  }
+  return listOfYears;
+}
 
 export function YearsSelector({toggle, addNew, show}) {
 
@@ -158,7 +179,7 @@ export function YearsSelector({toggle, addNew, show}) {
 
   const handleAddRange = () => {
     if (startYearRef.current.value && endYearRef.current.value) {
-      let newRange = [startYearRef.current.value, endYearRef.current.value];
+      let newRange = getYearsBetween(startYearRef.current.value, endYearRef.current.value);
       addNew(newRange);
       toggle();
     }
@@ -166,12 +187,13 @@ export function YearsSelector({toggle, addNew, show}) {
 
   return (<>
       <Modal isOpen={show} className="modal-dialog-centered date-picker">
-        <ModalHeader>Select Year Range</ModalHeader>
+        <ModalHeader>Year Person Was Born</ModalHeader>
         <ModalBody>
           <div className='input-range'>
             <div className='ir-start'>
               <label>Start Value</label>
               <select ref={startYearRef}>
+                <option key={`default-start`} value={0}>Select a value</option>
                 {allYears.map((year) => {
                   return <option key={`${year}-start`} value={year}>{year}</option>;
                 })}
@@ -181,6 +203,7 @@ export function YearsSelector({toggle, addNew, show}) {
             <div className='ir-end'>
               <label>End Value</label>
               <select ref={endYearRef}>
+                <option key={`default-end`} value={0}>Select a value</option>
                 {allYears.map((year) => {
                   return <option key={`${year}-start`} value={year}>{year}</option>;
                 })}
