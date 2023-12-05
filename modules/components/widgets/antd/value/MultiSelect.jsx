@@ -93,7 +93,7 @@ export default class MultiSelectWidget extends PureComponent {
     const customSelectProps = omit(customProps, ["showCheckboxes"]);
 
     // modal helpers
-    let showModal = false;
+    let showModal = true;
     const toggleModal = () => {
       showModal = !showModal;
       console.log("toggleModal clicked", showModal)
