@@ -150,6 +150,7 @@ function populateYears() {
   }
 }
 populateYears();
+allYears.reverse();
 
 function getYearsBetween(start, end) {
   let startYear = 0;
@@ -163,10 +164,10 @@ function getYearsBetween(start, end) {
     startYear = end;
     endYear = start;
   }
-  totalYears = parseInt(startYear) - parseInt(endYear);
+  totalYears = parseInt(endYear) - parseInt(startYear);
   if(totalYears > 0) {
-    for (let i = startYear; i <= totalYears; i++) {
-      listOfYears.push(start + i);
+    for (let i = 0; i <= totalYears; i++) {
+      listOfYears.push(parseInt(startYear) + i);
     }
   }
   return listOfYears;
@@ -195,7 +196,7 @@ export function YearsSelector({toggle, addNew, show}) {
               <label>Start Value</label>
               <select ref={startYearRef}>
                 <option key={`default-start`} value={0}>Select a value</option>
-                {allYears.reverse().map((year) => {
+                {allYears.map((year) => {
                   return <option key={`${year}-start`} value={year}>{year}</option>;
                 })}
               </select>
@@ -205,8 +206,8 @@ export function YearsSelector({toggle, addNew, show}) {
               <label>End Value</label>
               <select ref={endYearRef}>
                 <option key={`default-end`} value={0}>Select a value</option>
-                {allYears.reverse().map((year) => {
-                  return <option key={`${year}-start`} value={year}>{year}</option>;
+                {allYears.map((year) => {
+                  return <option key={`${year}-end`} value={year}>{year}</option>;
                 })}
               </select>
             </div>
