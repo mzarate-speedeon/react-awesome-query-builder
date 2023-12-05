@@ -184,7 +184,7 @@ export function YearsSelector({toggle, addNew, show}) {
 
   const handleAddRange = () => {
     if (startYearRef.current.value && endYearRef.current.value) {
-      let newRange = `${startYearRef.current.value}|${endYearRef.current.value}`;
+      let newRange = [`${startYearRef.current.value}|${endYearRef.current.value}`];
       addNew(newRange);
       toggle();
     }
