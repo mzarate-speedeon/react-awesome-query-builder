@@ -180,6 +180,7 @@ export function YearsSelector({toggle, addNew, show}) {
   const handleAddRange = () => {
     if (startYearRef.current.value && endYearRef.current.value) {
       let newRange = getYearsBetween(startYearRef.current.value, endYearRef.current.value);
+      alert(newRange)
       addNew(newRange);
       toggle();
     }
@@ -194,7 +195,7 @@ export function YearsSelector({toggle, addNew, show}) {
               <label>Start Value</label>
               <select ref={startYearRef}>
                 <option key={`default-start`} value={0}>Select a value</option>
-                {allYears.map((year) => {
+                {allYears.reverse().map((year) => {
                   return <option key={`${year}-start`} value={year}>{year}</option>;
                 })}
               </select>
@@ -204,7 +205,7 @@ export function YearsSelector({toggle, addNew, show}) {
               <label>End Value</label>
               <select ref={endYearRef}>
                 <option key={`default-end`} value={0}>Select a value</option>
-                {allYears.map((year) => {
+                {allYears.reverse().map((year) => {
                   return <option key={`${year}-start`} value={year}>{year}</option>;
                 })}
               </select>
