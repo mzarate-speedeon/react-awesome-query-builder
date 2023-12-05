@@ -35,8 +35,6 @@ export default class NumberWidget extends PureComponent {
     const {renderSize} = config.settings;
     const aValue = value != undefined ? value : undefined;
 
-    console.log("number widget props", this.props)
-
     return (
       <Col>
         <InputNumber

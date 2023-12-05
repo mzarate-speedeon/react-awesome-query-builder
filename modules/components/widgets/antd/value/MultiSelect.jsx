@@ -83,7 +83,7 @@ export default class MultiSelectWidget extends PureComponent {
   };
 
   render() {
-    const {config, placeholder, allowCustomValues, customProps, value, readonly} = this.props;
+    const {config, placeholder, allowCustomValues, customProps, value, readonly, field} = this.props;
     const {renderSize} = config.settings;
     const placeholderWidth = calcTextWidth(placeholder);
     const aValue = value && value.length ? value : undefined;
@@ -91,7 +91,7 @@ export default class MultiSelectWidget extends PureComponent {
     const dropdownWidth = this.optionsMaxWidth + SELECT_WIDTH_OFFSET_RIGHT;
     const customSelectProps = omit(customProps, ["showCheckboxes"]);
     
-    return (
+    return (field === "ameps__dob_year" ? <button>Year</button> :
       <Select
         disabled={readonly}
         mode={allowCustomValues ? "tags" : "multiple"}
