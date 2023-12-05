@@ -156,26 +156,26 @@ function populateYears() {
 populateYears();
 allYears.reverse();
 
-function getYearsBetween(start, end) {
-  let startYear = 0;
-  let endYear = 0;
-  let totalYears = 0;
-  let listOfYears = [];
-  if(parseInt(start) < parseInt(end)) {
-    startYear = start;
-    endYear = end;
-  } else { // invert the values
-    startYear = end;
-    endYear = start;
-  }
-  totalYears = parseInt(endYear) - parseInt(startYear);
-  if(totalYears > 0) {
-    for (let i = 0; i <= totalYears; i++) {
-      listOfYears.push(parseInt(startYear) + i);
-    }
-  }
-  return listOfYears;
-}
+// function getYearsBetween(start, end) {
+//   let startYear = 0;
+//   let endYear = 0;
+//   let totalYears = 0;
+//   let listOfYears = [];
+//   if(parseInt(start) < parseInt(end)) {
+//     startYear = start;
+//     endYear = end;
+//   } else { // invert the values
+//     startYear = end;
+//     endYear = start;
+//   }
+//   totalYears = parseInt(endYear) - parseInt(startYear);
+//   if(totalYears > 0) {
+//     for (let i = 0; i <= totalYears; i++) {
+//       listOfYears.push(parseInt(startYear) + i);
+//     }
+//   }
+//   return listOfYears;
+// }
 
 export function YearsSelector({toggle, addNew, show}) {
 
@@ -184,8 +184,7 @@ export function YearsSelector({toggle, addNew, show}) {
 
   const handleAddRange = () => {
     if (startYearRef.current.value && endYearRef.current.value) {
-      let newRange = getYearsBetween(startYearRef.current.value, endYearRef.current.value);
-      alert(newRange)
+      let newRange = `${startYearRef.current.value}|${endYearRef.current.value}`;
       addNew(newRange);
       toggle();
     }
