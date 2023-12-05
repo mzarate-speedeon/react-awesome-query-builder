@@ -1,4 +1,4 @@
-import React, { PureComponent, useRef } from "react";
+import React, { PureComponent, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Select } from "antd";
 import {calcTextWidth, SELECT_WIDTH_OFFSET_RIGHT} from "../../../../utils/domUtils";
@@ -29,6 +29,7 @@ export default class MultiSelectWidget extends PureComponent {
     this.onPropsChanged(props);
     this.state = {
       showModal: false,
+      selectedYearRange: []
     }
   }
 
@@ -83,6 +84,7 @@ export default class MultiSelectWidget extends PureComponent {
 
   handleYearsRange = (val) => {
     this.props.setValue(val);
+    this.setState({selectedYearRange: val})
   }
 
   filterOption = (input, option) => {
@@ -108,7 +110,11 @@ export default class MultiSelectWidget extends PureComponent {
     return (field === "ameps__dob_year" ? 
       <>
         {!readonly && <Button size="sm" className="btn-light" onClick={toggleModal}>+ Add Range</Button>}
-        <span>{value}</span>
+        <span>{this.state.selectedYearRange.map((range) => {
+          return (
+            <span>{range}</span>
+          );
+        })}</span>
         { this.state.showModal && <YearsSelector
            show={this.state.showModal}
            toggle={toggleModal}
@@ -179,13 +185,18 @@ allYears.reverse();
 
 export function YearsSelector({toggle, addNew, show}) {
 
+  const [selectedRanges, setSelectedRanges] = useState([]);
+
   const startYearRef = useRef(null);
   const endYearRef = useRef(null);
 
   const handleAddRange = () => {
     if (startYearRef.current.value && endYearRef.current.value) {
       let newRange = [`${startYearRef.current.value}|${endYearRef.current.value}`];
-      addNew(newRange);
+      if(!selectedRanges.includes(newRange)) {
+        setSelectedRanges([...selectedRanges, newRange]);
+      }
+      addNew(selectedRanges);
       toggle();
     }
   }
