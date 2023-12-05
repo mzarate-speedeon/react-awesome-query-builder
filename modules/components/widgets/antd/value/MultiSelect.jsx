@@ -141,6 +141,16 @@ export default class MultiSelectWidget extends PureComponent {
  * Modal to select range of years
  * @returns 
  */
+let currentDate = new Date();
+let currentYear = currentDate.getFullYear();
+let allYears = [];
+function populateYears() {
+  for (let i = (currentYear - 110); i <= currentYear; i++) {
+    allYears.push(i);
+  }
+}
+populateYears();
+
 export function YearsSelector({toggle, addNew, show}) {
 
   const startYearRef = useRef(null);
@@ -162,20 +172,18 @@ export function YearsSelector({toggle, addNew, show}) {
             <div className='ir-start'>
               <label>Start Value</label>
               <select ref={startYearRef}>
-                <option value="1980">1980</option>
-                <option value="1990">1990</option>
-                <option value="2000">2000</option>
-                <option value="2010">2010</option>
+                {allYears.map((year) => {
+                  return <option key={`${year}-start`} value={year}>{year}</option>;
+                })}
               </select>
             </div>
             <i className="bi bi-arrow-right"></i>
             <div className='ir-end'>
               <label>End Value</label>
               <select ref={endYearRef}>
-                <option value="1980">1980</option>
-                <option value="1990">1990</option>
-                <option value="2000">2000</option>
-                <option value="2010">2010</option>
+                {allYears.map((year) => {
+                  return <option key={`${year}-start`} value={year}>{year}</option>;
+                })}
               </select>
             </div>
           </div>
