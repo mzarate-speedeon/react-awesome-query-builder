@@ -81,6 +81,10 @@ export default class MultiSelectWidget extends PureComponent {
     }
   };
 
+  handleYearsRange = (val) => {
+    this.props.setValue(val);
+  }
+
   filterOption = (input, option) => {
     const dataForFilter = option.children || option.value;
     return dataForFilter.toLowerCase().indexOf(input.toLowerCase()) >= 0;
@@ -108,7 +112,7 @@ export default class MultiSelectWidget extends PureComponent {
         { this.state.showModal && <YearsSelector
            show={this.state.showModal}
            toggle={toggleModal}
-           addNew={(val) => this.handleChange(val)}
+           addNew={(val) => this.handleYearsRange(val)}
         />}
       </>
       :
