@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, useRef } from "react";
 import PropTypes from "prop-types";
 import { Select } from "antd";
 import {calcTextWidth, SELECT_WIDTH_OFFSET_RIGHT} from "../../../../utils/domUtils";
@@ -91,9 +91,24 @@ export default class MultiSelectWidget extends PureComponent {
     const width = aValue ? null : placeholderWidth + SELECT_WIDTH_OFFSET_RIGHT;
     const dropdownWidth = this.optionsMaxWidth + SELECT_WIDTH_OFFSET_RIGHT;
     const customSelectProps = omit(customProps, ["showCheckboxes"]);
+
+    // modal helpers
+    let showModal = false;
+    const toggleModal = () => {
+      showModal = !showModal;
+    }
     
     return (field === "ameps__dob_year" ? 
-      <Button size="sm" className="btn-light">+ Add Range</Button> :
+      <>
+        {!readonly && <Button size="sm" className="btn-light" onClick={toggleModal}>+ Add Range</Button>}
+        <span>{value}</span>
+        { <YearsSelector 
+           show={showModal}
+           toggle={toggleModal}
+           addNew={(val) => this.handleChange(val)}
+        />}
+      </>
+      :
       <Select
         disabled={readonly}
         mode={allowCustomValues ? "tags" : "multiple"}
@@ -123,41 +138,54 @@ export default class MultiSelectWidget extends PureComponent {
  * Modal to select range of years
  * @returns 
  */
-export function YearsSelector({readonly}) {
+export function YearsSelector({show, toggle, addNew}) {
+
+  const startYearRef = useRef(null);
+  const endYearRef = useRef(null);
+
+  const handleAddRange = () => {
+    if (startYearRef.current && endYearRef.current) {
+      let newRange = [startYearRef, endYearRef];
+      addNew(newRange);
+      toggle();
+    }
+  }
+
   return (<>
-    {!readonly && <><Button size="sm" className="btn-light" onClick={this.toggle}>+ Add {this.state.inputType} Range</Button>
-      <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-dialog-centered date-picker">
-        <ModalHeader toggle={this.toggle}>{chartType}</ModalHeader>
+      <Modal isOpen={show} className="modal-dialog-centered date-picker">
+        <ModalHeader>Select Year Range</ModalHeader>
         <ModalBody>
           <div className='input-range'>
             <div className='ir-start'>
               <label>Start Value</label>
-              <Input
-                value={this.state.startValue}
-                onChange={(ev) => this.onInputChange(ev, 'start')}
-                max={this.state.endValue}
-              />
+              <select ref={startYearRef}>
+                <option value="1980">1980</option>
+                <option value="1990">1990</option>
+                <option value="2000">2000</option>
+                <option value="2010">2010</option>
+              </select>
             </div>
             <i className="bi bi-arrow-right"></i>
             <div className='ir-end'>
               <label>End Value</label>
-              <Input
-                value={this.state.endValue}
-                onChange={(ev) => this.onInputChange(ev, 'end')}
-                max={this.state.endValue}
-              />
+              <select ref={endYearRef}>
+                <option value="1980">1980</option>
+                <option value="1990">1990</option>
+                <option value="2000">2000</option>
+                <option value="2010">2010</option>
+              </select>
             </div>
           </div>
-          <Alert color="warning" fade isOpen={this.state.error}>
-            <i className="bi bi-exclamation-diamond"></i>
-            {this.state.errorMessage}
-          </Alert>
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" size="sm" onClick={this.toggle}>Cancel</Button>
-          <Button color="primary" className="promote" size="sm" onClick={this.onRangeCommit}>Add {this.state.inputType} Range</Button>{' '}
+          <Button color="secondary" size="sm" onClick={toggle}>Cancel</Button>
+          <Button color="primary" className="promote" size="sm" 
+            onClick={handleAddRange}
+            disabled={!startYearRef.current || !endYearRef.current}
+          >
+              Add Selection
+          </Button>{' '}
         </ModalFooter>
       </Modal>
-    </>}
   </>)
 }
