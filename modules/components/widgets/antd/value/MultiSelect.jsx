@@ -27,6 +27,9 @@ export default class MultiSelectWidget extends PureComponent {
     super(props);
     useOnPropsChanged(this);
     this.onPropsChanged(props);
+    this.state = {
+      showModal: false,
+    }
   }
 
   componentDidMount() {
@@ -93,17 +96,17 @@ export default class MultiSelectWidget extends PureComponent {
     const customSelectProps = omit(customProps, ["showCheckboxes"]);
 
     // modal helpers
-    let showModal = true;
     const toggleModal = () => {
-      showModal = !showModal;
-      console.log("toggleModal clicked", showModal)
+      this.setState({showModal: !this.state.showModal})
+      console.log("toggleModal clicked", this.state.showModal)
     }
     
     return (field === "ameps__dob_year" ? 
       <>
         {!readonly && <Button size="sm" className="btn-light" onClick={toggleModal}>+ Add Range</Button>}
         <span>{value}</span>
-        { showModal && <YearsSelector
+        { this.state.showModal && <YearsSelector
+           show={this.state.showModal}
            toggle={toggleModal}
            addNew={(val) => this.handleChange(val)}
         />}
@@ -138,21 +141,21 @@ export default class MultiSelectWidget extends PureComponent {
  * Modal to select range of years
  * @returns 
  */
-export function YearsSelector({toggle, addNew}) {
+export function YearsSelector({toggle, addNew, show}) {
 
   const startYearRef = useRef(null);
   const endYearRef = useRef(null);
 
   const handleAddRange = () => {
-    if (startYearRef.current && endYearRef.current) {
-      let newRange = [startYearRef, endYearRef];
+    if (startYearRef.current.value && endYearRef.current.value) {
+      let newRange = [startYearRef.current.value, endYearRef.current.value];
       addNew(newRange);
       toggle();
     }
   }
 
   return (<>
-      <Modal isOpen={true} className="modal-dialog-centered date-picker">
+      <Modal isOpen={show} className="modal-dialog-centered date-picker">
         <ModalHeader>Select Year Range</ModalHeader>
         <ModalBody>
           <div className='input-range'>
@@ -181,7 +184,6 @@ export function YearsSelector({toggle, addNew}) {
           <Button color="secondary" size="sm" onClick={toggle}>Cancel</Button>
           <Button color="primary" className="promote" size="sm" 
             onClick={handleAddRange}
-            disabled={!startYearRef.current || !endYearRef.current}
           >
               Add Selection
           </Button>{' '}
