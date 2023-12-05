@@ -85,11 +85,11 @@ export default class MultiSelectWidget extends PureComponent {
   };
 
   handleYearsRange = (val) => {
-    this.setState({selectedYearRange: val})
-    const updateCall = () => {
+    this.setState(() => {
+      return { selectedYearRange: val };
+    }, () => {
       this.props.setValue(this.state.selectedYearRange);
-    }
-    updateCall();
+    });
   }
 
   filterOption = (input, option) => {
@@ -201,8 +201,10 @@ export function YearsSelector({toggle, addNew, show}) {
       if(!selectedRanges.includes(newRange)) {
         setSelectedRanges([...selectedRanges, newRange]);
       }
-      addNew(selectedRanges);
-      toggle();
+      setTimeout(() => {
+        addNew(selectedRanges);
+        toggle();
+      }, 100)
     }
   }
 
