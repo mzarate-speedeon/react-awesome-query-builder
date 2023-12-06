@@ -176,11 +176,15 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
       if(!selectedRanges.includes(newRange)) {
         let updatedState = [...selectedRanges, newRange];
         setSelectedRanges(updatedState);
-        setStartYear(startYearRef.current.value);
         addNew(updatedState);
       }
       toggle();
     }
+  }
+
+  const handleUpdateStartYear = () => {
+    setStartYear(startYearRef.current.value);
+    console.log("The startYear was set", startYear)
   }
 
   useEffect(() => {
@@ -203,7 +207,7 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
           <div className='input-range custom-select'>
             <div className='ir-start'>
               <label>Start Value</label>
-              <select ref={startYearRef}>
+              <select ref={startYearRef} onChange={handleUpdateStartYear}>
                 <option key={`default-start`} value={0}>Select a value</option>
                 {allYears.map((year) => {
                   return <option key={`${year}-start`} value={year}>{year}</option>;
