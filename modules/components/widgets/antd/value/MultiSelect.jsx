@@ -118,7 +118,8 @@ export default class MultiSelectWidget extends PureComponent {
         { this.state.showModal && <YearsSelector
            show={this.state.showModal}
            toggle={toggleModal}
-           addNew={(val) => this.handleYearsRange(val)}
+           addNew={this.handleYearsRange}
+           currentSelections={this.state.selectedYearRange}
         />}
       </>
       :
@@ -161,9 +162,10 @@ function populateYears() {
 populateYears();
 allYears.reverse();
 
-export function YearsSelector({toggle, addNew, show}) {
+export function YearsSelector({toggle, addNew, show, currentSelections}) {
 
-  const [selectedRanges, setSelectedRanges] = useState([]);
+  const [selectedRanges, setSelectedRanges] = useState(currentSelections || []);
+  const [updated, setUpdated] = useState(false);
 
   const startYearRef = useRef(null);
   const endYearRef = useRef(null);
@@ -174,15 +176,19 @@ export function YearsSelector({toggle, addNew, show}) {
       if(!selectedRanges.includes(newRange)) {
         let updatedState = [...selectedRanges, newRange];
         setSelectedRanges(updatedState);
+        setUpdated(true);
       }
       toggle();
     }
   }
 
   useEffect(() => {
-    console.log("sending: ", selectedRanges)
-    addNew(selectedRanges);
-  }, [selectedRanges])
+    if(updated) {
+      console.log("sending: ", selectedRanges)
+      addNew(selectedRanges);
+      setUpdated(false);
+    }
+  }, [updated])
 
   return (<>
       <Modal isOpen={show} className="modal-dialog-centered date-picker">
