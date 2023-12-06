@@ -108,10 +108,10 @@ export default class MultiSelectWidget extends PureComponent {
     
     return (field === "ameps__dob_year" ? 
       <>
-        {!readonly && <Button size="sm" className="btn-light add-edit-range" onClick={toggleModal}>Add/Edit</Button>}
-        <span>{this.state.selectedYearRange.map((range) => {
+        {!readonly && <button className="add-edit-range" onClick={toggleModal}>Add/Edit</button>}
+        <span className="range-wrapper">{this.state.selectedYearRange.map((range) => {
           return (
-            <span key={range}>{range}</span>
+            <span className="range-details" key={range}>{range}</span>
           );
         })}</span>
         { this.state.showModal && <YearsSelector
