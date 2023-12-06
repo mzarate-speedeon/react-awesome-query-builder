@@ -1,4 +1,4 @@
-import React, { PureComponent, useRef, useState } from "react";
+import React, { PureComponent, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Select } from "antd";
 import {calcTextWidth, SELECT_WIDTH_OFFSET_RIGHT} from "../../../../utils/domUtils";
@@ -30,14 +30,12 @@ export default class MultiSelectWidget extends PureComponent {
     this.onPropsChanged(props);
     this.state = {
       showModal: false,
-      selectedYearRange: []
+      selectedYearRange: this.props.value || [],
     }
   }
 
   componentDidMount() {
-    if(this.props.value) {
-      this.setState({selectedRanges: this.props.value})
-    }
+    console.log("this.props.value:", this.props.value)
   }
 
   onPropsChanged (props) {
@@ -171,22 +169,20 @@ export function YearsSelector({toggle, addNew, show}) {
   const endYearRef = useRef(null);
 
   const handleAddRange = () => {
-    console.log("handleAddRange was called")
     if (startYearRef.current.value && endYearRef.current.value) {
       let newRange = `${startYearRef.current.value}|${endYearRef.current.value}`;
-      console.log("inside if, newRange:", newRange)
       if(!selectedRanges.includes(newRange)) {
         let updatedState = [...selectedRanges, newRange];
-        console.log("updating state updatedState:", updatedState)
         setSelectedRanges(updatedState);
-        setTimeout(() => {
-          addNew(selectedRanges);
-        }, 200);
       }
       toggle();
     }
-    console.log("done handleAddRange")
   }
+
+  useEffect(() => {
+    console.log("sending: ", selectedRanges)
+    addNew(selectedRanges);
+  }, [selectedRanges])
 
   return (<>
       <Modal isOpen={show} className="modal-dialog-centered date-picker">
