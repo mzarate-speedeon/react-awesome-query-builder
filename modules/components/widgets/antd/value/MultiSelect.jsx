@@ -179,8 +179,10 @@ export function YearsSelector({toggle, addNew, show}) {
         let updatedState = [...selectedRanges, newRange];
         console.log("updating state updatedState:", updatedState)
         setSelectedRanges(updatedState);
+        setTimeout(() => {
+          addNew(selectedRanges);
+        }, 200);
       }
-      addNew(selectedRanges);
       toggle();
     }
     console.log("done handleAddRange")
