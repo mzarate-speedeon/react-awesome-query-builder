@@ -6,6 +6,7 @@ import {mapListValues} from "../../../../utils/stuff";
 import {useOnPropsChanged} from "../../../../utils/reactUtils";
 import omit from "lodash/omit";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert, Input } from 'reactstrap';
+import './multiselectStyles.css';
 const Option = Select.Option;
 
 export default class MultiSelectWidget extends PureComponent {
@@ -117,7 +118,7 @@ export default class MultiSelectWidget extends PureComponent {
         {!readonly && <Button size="sm" className="btn-light" onClick={toggleModal}>+ Add Range</Button>}
         <span>{this.state.selectedYearRange.map((range) => {
           return (
-            <span>{range}</span>
+            <span key={range}>{range}</span>
           );
         })}</span>
         { this.state.showModal && <YearsSelector
@@ -154,7 +155,6 @@ export default class MultiSelectWidget extends PureComponent {
 
 /**
  * Modal to select range of years
- * @returns 
  */
 let currentDate = new Date();
 let currentYear = currentDate.getFullYear();
@@ -197,14 +197,13 @@ export function YearsSelector({toggle, addNew, show}) {
 
   const handleAddRange = () => {
     if (startYearRef.current.value && endYearRef.current.value) {
-      let newRange = [`${startYearRef.current.value}|${endYearRef.current.value}`];
+      let newRange = `${startYearRef.current.value}|${endYearRef.current.value}`;
       if(!selectedRanges.includes(newRange)) {
-        setSelectedRanges([...selectedRanges, newRange]);
+        let updatedState = [...selectedRanges, newRange];
+        setSelectedRanges(updatedState);
       }
-      setTimeout(() => {
-        addNew(selectedRanges);
-        toggle();
-      }, 100)
+      addNew(selectedRanges);
+      toggle();
     }
   }
 
@@ -212,7 +211,7 @@ export function YearsSelector({toggle, addNew, show}) {
       <Modal isOpen={show} className="modal-dialog-centered date-picker">
         <ModalHeader>Year Person Was Born</ModalHeader>
         <ModalBody>
-          <div className='input-range'>
+          <div className='input-range custom-select'>
             <div className='ir-start'>
               <label>Start Value</label>
               <select ref={startYearRef}>
