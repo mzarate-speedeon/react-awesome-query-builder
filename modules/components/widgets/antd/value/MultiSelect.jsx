@@ -165,6 +165,7 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
 
   const [selectedRanges, setSelectedRanges] = useState(currentSelections || []);
   const [endYearList, setEndYearList] = useState(allYears);
+  const [startYear, setStartYear] = useState();
 
   const startYearRef = useRef(null);
   const endYearRef = useRef(null);
@@ -175,6 +176,7 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
       if(!selectedRanges.includes(newRange)) {
         let updatedState = [...selectedRanges, newRange];
         setSelectedRanges(updatedState);
+        setStartYear(startYearRef.current.value);
         addNew(updatedState);
       }
       toggle();
@@ -182,22 +184,17 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
   }
 
   useEffect(() => {
-    console.log("The Ref", startYearRef)
-    if(startYearRef.current.value) {
+    console.log("The startYear", startYear)
+    if(startYear) {
       const reducedList = allYears.filter(checkYears);
       function checkYears(year) {
-        return year >= startYearRef.current.value;
+        return parseInt(year) >= parseInt(startYear);
       }
       setEndYearList(reducedList); // only year after the starting year
     } else {
       setEndYearList(allYears); // all years
     }
-
-    if(startYearRef.current.value > endYearRef.current.value) {
-      endYearRef.current.value = startYearRef.current.value;
-    }
-
-  }, [startYearRef])
+  }, [startYear])
 
   return (<>
       <Modal isOpen={show} className="modal-dialog-centered date-picker">
