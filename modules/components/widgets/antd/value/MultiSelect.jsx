@@ -6,7 +6,7 @@ import {mapListValues} from "../../../../utils/stuff";
 import {useOnPropsChanged} from "../../../../utils/reactUtils";
 import omit from "lodash/omit";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert, Input } from 'reactstrap';
-import './multiselectStyles.css';
+
 const Option = Select.Option;
 
 export default class MultiSelectWidget extends PureComponent {
