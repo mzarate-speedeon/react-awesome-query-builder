@@ -192,6 +192,13 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
     setEndYear(endYearRef.current.value);
   }
 
+  const handleDeleteRange = (el) => {
+    let indexToRemove = selectedRanges.indexOf(el);
+    let updatedArray = selectedRanges.filter((_,index) => index !== indexToRemove );
+    setSelectedRanges(updatedArray);
+    addNew(updatedArray);
+  }
+
   useEffect(() => {
     console.log("The startYear", startYear)
     if(startYear) {
@@ -243,7 +250,9 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
             {selectedRanges && selectedRanges.map((range) => {
               return (<div className="year-range">
                 <span className="range">{range}</span>
-                <span className="delete-icon"><i className="bi bi-trash"/></span>
+                <span className="delete-icon">
+                  <i className="bi bi-trash" onClick={() => handleDeleteRange(range)}/>
+                </span>
               </div>)
             })}
           </div>
@@ -252,7 +261,7 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
           <Button color="secondary" size="sm" onClick={toggle}>Cancel</Button>
           <Button color="primary" className="promote" size="sm" 
             onClick={handleAddRange}
-            disabled={ready}
+            disabled={!ready}
           >
               Add Selection
           </Button>{' '}
