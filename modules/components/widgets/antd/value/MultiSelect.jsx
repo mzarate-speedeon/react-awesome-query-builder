@@ -1,4 +1,4 @@
-import React, { PureComponent, useEffect, useRef, useState } from "react";
+import React, { PureComponent, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Select } from "antd";
 import {calcTextWidth, SELECT_WIDTH_OFFSET_RIGHT} from "../../../../utils/domUtils";
@@ -35,7 +35,9 @@ export default class MultiSelectWidget extends PureComponent {
   }
 
   componentDidMount() {
-    console.log("this.props.value:", this.props.value)
+    if(this.props.value) {
+      this.props.setValue(this.props.value)
+    }
   }
 
   onPropsChanged (props) {
@@ -78,8 +80,6 @@ export default class MultiSelectWidget extends PureComponent {
   };
 
   handleYearsRange = (val) => {
-    console.log("in state:", this.state.selectedYearRange)
-    console.log("new to add:", val)
     this.setState(() => {
       return { selectedYearRange: val };
     }, () => {
@@ -104,7 +104,6 @@ export default class MultiSelectWidget extends PureComponent {
     // modal helpers
     const toggleModal = () => {
       this.setState({showModal: !this.state.showModal})
-      console.log("toggleModal clicked", this.state.showModal)
     }
     
     return (field === "ameps__dob_year" ? 
@@ -165,6 +164,7 @@ allYears.reverse();
 export function YearsSelector({toggle, addNew, show, currentSelections}) {
 
   const [selectedRanges, setSelectedRanges] = useState(currentSelections || []);
+  const [endYearList, setEndYearList] = useState(allYears);
 
   const startYearRef = useRef(null);
   const endYearRef = useRef(null);
@@ -180,6 +180,23 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
       toggle();
     }
   }
+
+  useEffect(() => {
+    if(startYearRef.current.value) {
+      const reducedList = allYears.filter(checkYears);
+      function checkYears(year) {
+        return year >= startYearRef.current.value;
+      }
+      setEndYearList(reducedList); // only year after the starting year
+    } else {
+      setEndYearList(allYears); // all years
+    }
+
+    if(startYearRef.current.value > endYearRef.current.value) {
+      endYearRef.current.value = startYearRef.current.value;
+    }
+
+  }, [startYearRef.current.value])
 
   return (<>
       <Modal isOpen={show} className="modal-dialog-centered date-picker">
@@ -200,7 +217,7 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
               <label>End Value</label>
               <select ref={endYearRef}>
                 <option key={`default-end`} value={0}>Select a value</option>
-                {allYears.map((year) => {
+                {endYearList.map((year) => {
                   return <option key={`${year}-end`} value={year}>{year}</option>;
                 })}
               </select>
