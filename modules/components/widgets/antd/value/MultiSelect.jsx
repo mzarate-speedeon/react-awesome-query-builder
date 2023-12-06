@@ -166,6 +166,8 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
   const [selectedRanges, setSelectedRanges] = useState(currentSelections || []);
   const [endYearList, setEndYearList] = useState(allYears);
   const [startYear, setStartYear] = useState();
+  const [endYear, setEndYear] = useState();
+  const [ready, setReady] = useState(false);
 
   const startYearRef = useRef(null);
   const endYearRef = useRef(null);
@@ -184,7 +186,10 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
 
   const handleUpdateStartYear = () => {
     setStartYear(startYearRef.current.value);
-    console.log("The startYear was set", startYear)
+  }
+
+  const handleUpdateEndYear = () => {
+    setEndYear(endYearRef.current.value);
   }
 
   useEffect(() => {
@@ -199,6 +204,14 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
       setEndYearList(allYears); // all years
     }
   }, [startYear])
+
+  useEffect(() => {
+    if(startYear && endYear) {
+      setReady(true);
+    } else {
+      setReady(false);
+    }
+  }, [startYear, endYear])
 
   return (<>
       <Modal isOpen={show} className="modal-dialog-centered date-picker">
@@ -217,25 +230,29 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
             <i className="bi bi-arrow-right"></i>
             <div className='ir-end'>
               <label>End Value</label>
-              <select ref={endYearRef}>
+              <select ref={endYearRef} onChange={handleUpdateEndYear}>
                 <option key={`default-end`} value={0}>Select a value</option>
                 {endYearList.map((year) => {
                   return <option key={`${year}-end`} value={year}>{year}</option>;
                 })}
               </select>
             </div>
-            <hr />
-            <div>
-              {selectedRanges && selectedRanges.map((range) => {
-                return <div>{range}</div>
-              })}
-            </div>
+          </div>
+          <hr />
+          <div className="year-editor-section">
+            {selectedRanges && selectedRanges.map((range) => {
+              return (<div className="year-range">
+                <span className="range">{range}</span>
+                <span className="delete-icon"><i className="bi bi-trash"/></span>
+              </div>)
+            })}
           </div>
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" size="sm" onClick={toggle}>Cancel</Button>
           <Button color="primary" className="promote" size="sm" 
             onClick={handleAddRange}
+            disabled={ready}
           >
               Add Selection
           </Button>{' '}
