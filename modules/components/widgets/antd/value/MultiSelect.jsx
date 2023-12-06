@@ -38,12 +38,6 @@ export default class MultiSelectWidget extends PureComponent {
     if(this.props.value) {
       this.setState({selectedRanges: this.props.value})
     }
-    console.log("props", this.props)
-  }
-
-  componentDidUpdate() {
-    console.log("The multiselect was updated")
-    console.log("props", this.props)
   }
 
   onPropsChanged (props) {
@@ -177,15 +171,19 @@ export function YearsSelector({toggle, addNew, show}) {
   const endYearRef = useRef(null);
 
   const handleAddRange = () => {
+    console.log("handleAddRange was called")
     if (startYearRef.current.value && endYearRef.current.value) {
       let newRange = `${startYearRef.current.value}|${endYearRef.current.value}`;
+      console.log("inside if, newRange:", newRange)
       if(!selectedRanges.includes(newRange)) {
         let updatedState = [...selectedRanges, newRange];
+        console.log("updating state updatedState:", updatedState)
         setSelectedRanges(updatedState);
       }
       addNew(selectedRanges);
       toggle();
     }
+    console.log("done handleAddRange")
   }
 
   return (<>
