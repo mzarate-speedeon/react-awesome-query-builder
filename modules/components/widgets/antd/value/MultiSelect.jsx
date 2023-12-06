@@ -182,21 +182,22 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
   }
 
   useEffect(() => {
-    if(startYearRef.current.value) {
-      const reducedList = allYears.filter(checkYears);
-      function checkYears(year) {
-        return year >= startYearRef.current.value;
-      }
-      setEndYearList(reducedList); // only year after the starting year
-    } else {
-      setEndYearList(allYears); // all years
-    }
+    console.log("The Ref", startYearRef)
+    // if(startYearRef.current.value) {
+    //   const reducedList = allYears.filter(checkYears);
+    //   function checkYears(year) {
+    //     return year >= startYearRef.current.value;
+    //   }
+    //   setEndYearList(reducedList); // only year after the starting year
+    // } else {
+    //   setEndYearList(allYears); // all years
+    // }
 
-    if(startYearRef.current.value > endYearRef.current.value) {
-      endYearRef.current.value = startYearRef.current.value;
-    }
+    // if(startYearRef.current.value > endYearRef.current.value) {
+    //   endYearRef.current.value = startYearRef.current.value;
+    // }
 
-  }, [startYearRef.current.value])
+  }, [startYearRef])
 
   return (<>
       <Modal isOpen={show} className="modal-dialog-centered date-picker">
