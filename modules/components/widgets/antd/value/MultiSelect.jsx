@@ -246,16 +246,19 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
             </div>
           </div>
           <hr />
-          <div className="year-editor-section">
-            {selectedRanges && selectedRanges.map((range) => {
-              return (<div className="year-range">
-                <span className="range">{range}</span>
-                <span className="delete-icon">
-                  <i className="bi bi-trash" onClick={() => handleDeleteRange(range)}/>
-                </span>
-              </div>)
-            })}
-          </div>
+          {selectedRanges &&
+            <div className="year-editor-section">
+              {selectedRanges.map((range) => {
+                return (<div className="year-range">
+                  <span className="range">{range}</span>
+                  <span className="delete-icon">
+                    <i className="bi bi-trash" onClick={() => handleDeleteRange(range)}/>
+                  </span>
+                </div>)
+              })}
+            </div>
+          }
+          
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" size="sm" onClick={toggle}>Close</Button>
