@@ -118,7 +118,7 @@ export default class MultiSelectWidget extends PureComponent {
           {
             this.state.selectedYearRange.length ? (<span className="range-wrapper">{this.state.selectedYearRange.map((range) => {
               return (
-                <span className="range-details" key={range}>{range}</span>
+                <span className="range-details" key={range}>{formatDisplayDateRange(range)}</span>
               );
             })}</span>) : ""
           }
@@ -313,6 +313,24 @@ function subtractYears(date, years) {
   return date;
 }
 
+const formatDisplayDateRange = (date) => {
+  if (!date) return;
+  let dates = date.split('-');
+  let startDate = formatDisplayDate(dates[0]);
+  let endDate = formatDisplayDate(dates[1]) || startDate;
+  return startDate + ' - ' + endDate;
+}
+
+// format YYYYMMDD into MM/DD/YYYY for display in widget.
+const formatDisplayDate = (date) => {
+  if (!date) return;
+  const year = date.substring(0, 4);
+  const month = date.substring(4, 6);
+  const day = date.substring(6, date.length);
+
+  return month + '/' + day + '/' + year;
+}
+
 export function BdaySelector({toggle, addNew, show, currentSelections}) {
   const [selectedRanges, setSelectedRanges] = useState(currentSelections || []);
   const [startDate, setStartDate] = useState();
@@ -348,24 +366,6 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
         day = '0' + day;
 
     return [year, month, day].join('');
-  }
-
-  const formatDisplayDateRange = (date) => {
-    if (!date) return;
-    let dates = date.split('-');
-    let startDate = formatDisplayDate(dates[0]);
-    let endDate = formatDisplayDate(dates[1]) || startDate;
-    return startDate + ' - ' + endDate;
-  }
-
-  // format YYYYMMDD into MM/DD/YYYY for display in widget.
-  const formatDisplayDate = (date) => {
-    if (!date) return;
-    const year = date.substring(0, 4);
-    const month = date.substring(4, 6);
-    const day = date.substring(6, date.length);
-
-    return month + '/' + day + '/' + year;
   }
 
   const handleAddRange = () => {
