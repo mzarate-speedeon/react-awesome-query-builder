@@ -352,10 +352,20 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
 
   const formatDisplayDateRange = (date) => {
     if (!date) return;
-    const dates = date.split('-');
-    const startDate = this.formatDisplayDate(dates[0]);
-    let endDate = this.formatDisplayDate(dates[1]) || startDate;
+    let dates = date.split('-');
+    let startDate = formatDisplayDate(dates[0]);
+    let endDate = formatDisplayDate(dates[1]) || startDate;
     return startDate + ' - ' + endDate;
+  }
+
+  // format YYYYMMDD into MM/DD/YYYY for display in widget.
+  const formatDisplayDate = (date) => {
+    if (!date) return;
+    const year = date.substring(0, 4);
+    const month = date.substring(4, 6);
+    const day = date.substring(6, date.length);
+
+    return month + '/' + day + '/' + year;
   }
 
   const handleAddRange = () => {
