@@ -101,29 +101,57 @@ export default class MultiSelectWidget extends PureComponent {
     const dropdownWidth = this.optionsMaxWidth + SELECT_WIDTH_OFFSET_RIGHT;
     const customSelectProps = omit(customProps, ["showCheckboxes"]);
 
+    const bday_range = "ameps__birthday_of_person_with_day_enhanced";
+    const year_range = "ameps__dob_year";
+
     // modal helpers
     const toggleModal = () => {
       this.setState({showModal: !this.state.showModal})
     }
+
+    if(field === year_range) {
+      return (
+        <>
+          {!readonly && <button className="add-edit-range" onClick={toggleModal}>Add/Edit</button>}
+          {
+            this.state.selectedYearRange.length ? (<span className="range-wrapper">{this.state.selectedYearRange.map((range) => {
+              return (
+                <span className="range-details" key={range}>{range}</span>
+              );
+            })}</span>) : ""
+          }
+          { this.state.showModal && <YearsSelector
+            show={this.state.showModal}
+            toggle={toggleModal}
+            addNew={this.handleYearsRange}
+            currentSelections={this.state.selectedYearRange}
+          />}
+        </>
+      );
+    }
+
+    if(field === bday_range) {
+      return (
+        <>
+          {!readonly && <button className="add-edit-range" onClick={toggleModal}>Add/Edit</button>}
+          {
+            this.state.selectedYearRange.length ? (<span className="range-wrapper">{this.state.selectedYearRange.map((range) => {
+              return (
+                <span className="range-details" key={range}>{range}</span>
+              );
+            })}</span>) : ""
+          }
+          { this.state.showModal && <YearsSelector
+            show={this.state.showModal}
+            toggle={toggleModal}
+            addNew={this.handleYearsRange}
+            currentSelections={this.state.selectedYearRange}
+          />}
+        </>
+      );
+    }
     
-    return (field === "ameps__dob_year" ? 
-      <>
-        {!readonly && <button className="add-edit-range" onClick={toggleModal}>Add/Edit</button>}
-        {
-          this.state.selectedYearRange.length ? (<span className="range-wrapper">{this.state.selectedYearRange.map((range) => {
-            return (
-              <span className="range-details" key={range}>{range}</span>
-            );
-          })}</span>) : ""
-        }
-        { this.state.showModal && <YearsSelector
-           show={this.state.showModal}
-           toggle={toggleModal}
-           addNew={this.handleYearsRange}
-           currentSelections={this.state.selectedYearRange}
-        />}
-      </>
-      :
+    return (
       <Select
         disabled={readonly}
         mode={allowCustomValues ? "tags" : "multiple"}
@@ -156,7 +184,7 @@ let currentDate = new Date();
 let currentYear = currentDate.getFullYear();
 let allYears = [];
 function populateYears() {
-  for (let i = (currentYear - 110); i <= (currentYear - 18); i++) {
+  for (let i = (currentYear - 110); i <= (currentYear); i++) {
     allYears.push(i);
   }
 }
@@ -207,7 +235,7 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
       function checkYears(year) {
         return parseInt(year) >= parseInt(startYear);
       }
-      setEndYearList(reducedList); // only year after the starting year
+      setEndYearList(reducedList); // only years after the starting year
     } else {
       setEndYearList(allYears); // all years
     }
