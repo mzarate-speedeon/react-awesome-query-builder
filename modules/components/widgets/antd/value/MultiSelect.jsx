@@ -320,11 +320,36 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
   const [minDate, setMinDate] = useState(subtractYears(new Date(), 110));
 
   const handleStartChange = (val) => {
-    console.log("start got:", val)
+    setStartDate(val);
+    console.log("start got:", formatDate(val) )
   }
 
   const handleEndChange = (val) => {
-    console.log("start got:", val)
+    setEndDate(val);
+    console.log("start got:", formatDate(val) )
+  }
+
+  // format date into YYYYMMDD for backend. 
+  const formatDate = (date) => {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('');
+  }
+
+  const formatDisplayDateRange = (date) => {
+    if (!date) return;
+    const dates = date.split('-');
+    const startDate = this.formatDisplayDate(dates[0]);
+    let endDate = this.formatDisplayDate(dates[1]) || startDate;
+    return startDate + ' - ' + endDate;
   }
 
   return (<>
