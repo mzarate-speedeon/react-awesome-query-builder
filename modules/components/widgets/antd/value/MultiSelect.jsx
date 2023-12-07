@@ -318,9 +318,12 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [minDate, setMinDate] = useState(subtractYears(new Date(), 110));
+  const [minEndDate, setMinEndDate] = useState();
+  const [ready, setReady] = useState(false);
 
   const handleStartChange = (val) => {
     setStartDate(val);
+    setMinEndDate(val);
     console.log("start got:", formatDate(val) )
   }
 
@@ -352,6 +355,18 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
     return startDate + ' - ' + endDate;
   }
 
+  const handleAddRange = () => {
+    console.log(`ready to send: ${formatDate(startDate)}-${formatDate(endDate)}`)
+  }
+
+  useEffect(() => {
+    if(startDate && endDate) {
+      setReady(true);
+    } else {
+      setReady(false);
+    }
+  }, [startDate, endDate])
+
   return (<>
     <Modal isOpen={show} className="modal-dialog-centered date-picker">
       <ModalHeader>Birthday</ModalHeader>
@@ -361,7 +376,7 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
             <label>Start Date</label>
             <DatePicker
               startDate={startDate}
-              selected={subtractYears(new Date(), 18)}
+              selected={startDate || subtractYears(new Date(), 18)}
               onChange={handleStartChange}
               showMonthDropdown
               showYearDropdown
@@ -375,17 +390,18 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
             <label>End Date</label>
             <DatePicker
               endDate={endDate}
-              selected={subtractYears(new Date(), 18)}
+              selected={endDate || subtractYears(new Date(), 18)}
               onChange={handleEndChange}
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
-              minDate={minDate}
+              minDate={minEndDate || minDate}
               maxDate={subtractYears(new Date(), 18)}
             >
             </DatePicker>
           </div>
         </div>
+        <br />
         <div>To ensure the targets are adults, the latest date that can be entered is 18 years prior to today's date.</div>
         <hr />
         {selectedRanges &&
@@ -404,12 +420,12 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
       </ModalBody>
       <ModalFooter>
         <Button color="secondary" size="sm" onClick={toggle}>Close</Button>
-        {/* <Button color="primary" className="promote" size="sm" 
+        <Button color="primary" className="promote" size="sm" 
           onClick={handleAddRange}
           disabled={!ready}
         >
             Add Selection
-        </Button>{' '} */}
+        </Button>{' '}
       </ModalFooter>
     </Modal>
 </>)
