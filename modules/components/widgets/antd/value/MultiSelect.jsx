@@ -118,7 +118,7 @@ export default class MultiSelectWidget extends PureComponent {
           {
             this.state.selectedYearRange.length ? (<span className="range-wrapper">{this.state.selectedYearRange.map((range) => {
               return (
-                <span className="range-details" key={range}>{formatDisplayDateRange(range)}</span>
+                <span className="range-details" key={range}>{range}</span>
               );
             })}</span>) : ""
           }
@@ -139,7 +139,7 @@ export default class MultiSelectWidget extends PureComponent {
           {
             this.state.selectedYearRange.length ? (<span className="range-wrapper">{this.state.selectedYearRange.map((range) => {
               return (
-                <span className="range-details" key={range}>{range}</span>
+                <span className="range-details" key={range}>{formatDisplayDateRange(range)}</span>
               );
             })}</span>) : ""
           }
