@@ -315,23 +315,28 @@ function subtractYears(date, years) {
 
 export function BdaySelector({toggle, addNew, show, currentSelections}) {
   const [selectedRanges, setSelectedRanges] = useState(currentSelections || []);
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const [minDate, setMinDate] = useState(subtractYears(new Date(), 110));
 
   const handleStartChange = (val) => {
     console.log("start got:", val)
   }
 
+  const handleEndChange = (val) => {
+    console.log("start got:", val)
+  }
+
   return (<>
     <Modal isOpen={show} className="modal-dialog-centered date-picker">
-      <ModalHeader>Year Person Was Born</ModalHeader>
+      <ModalHeader>Birthday</ModalHeader>
       <ModalBody>
         <div className='datepicker'>
           <div className='dp-start'>
             <label>Start Date</label>
             <DatePicker
               startDate={startDate}
-              selected={startDate}
+              selected={subtractYears(new Date(), 18)}
               onChange={handleStartChange}
               showMonthDropdown
               showYearDropdown
@@ -344,18 +349,19 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
           <div className='dp-end'>
             <label>End Date</label>
             <DatePicker
-              endDate={null}
-              selected={null}
-              onChange={(ev, endDate) => console.log(ev, endDate, 'end')}
+              endDate={endDate}
+              selected={subtractYears(new Date(), 18)}
+              onChange={handleEndChange}
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
-              minDate={null}
-              maxDate={null}
+              minDate={minDate}
+              maxDate={subtractYears(new Date(), 18)}
             >
             </DatePicker>
           </div>
         </div>
+        <div>To ensure the targets are adults, the latest date that can be entered is 18 years prior to today's date.</div>
         <hr />
         {selectedRanges &&
           <div className="year-editor-section">
