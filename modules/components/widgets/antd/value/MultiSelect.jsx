@@ -310,7 +310,7 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
  */
 export function BdaySelector({toggle, addNew, show, currentSelections}) {
   const [selectedRanges, setSelectedRanges] = useState(currentSelections || []);
-  
+
   return (<>
     <Modal isOpen={show} className="modal-dialog-centered date-picker">
       <ModalHeader>Year Person Was Born</ModalHeader>
@@ -352,7 +352,7 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
               return (<div className="year-range">
                 <span className="range">{range}</span>
                 <span className="delete-icon">
-                  <i className="bi bi-trash" onClick={() => handleDeleteRange(range)}/>
+                  {/* <i className="bi bi-trash" onClick={() => handleDeleteRange(range)}/> */}
                 </span>
               </div>)
             })}
@@ -362,12 +362,12 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
       </ModalBody>
       <ModalFooter>
         <Button color="secondary" size="sm" onClick={toggle}>Close</Button>
-        <Button color="primary" className="promote" size="sm" 
+        {/* <Button color="primary" className="promote" size="sm" 
           onClick={handleAddRange}
           disabled={!ready}
         >
             Add Selection
-        </Button>{' '}
+        </Button>{' '} */}
       </ModalFooter>
     </Modal>
 </>)
