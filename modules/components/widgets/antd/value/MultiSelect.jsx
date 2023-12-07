@@ -359,11 +359,22 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
   }
 
   const handleAddRange = () => {
-    console.log(`ready to send: ${formatDate(startDate)}-${formatDate(endDate)}`)
+    if (startDate && endDate) {
+      let newRange = `${formatDate(startDate)}-${formatDate(endDate)}`;
+      if(!selectedRanges.includes(newRange)) {
+        let updatedState = [...selectedRanges, newRange];
+        setSelectedRanges(updatedState);
+        addNew(updatedState);
+      }
+      toggle();
+    }
   }
 
-  const handleDeleteRange = (val) => {
-    console.log("I will remove:", val)
+  const handleDeleteRange = (el) => {
+    let indexToRemove = selectedRanges.indexOf(el);
+    let updatedArray = selectedRanges.filter((_,index) => index !== indexToRemove );
+    setSelectedRanges(updatedArray);
+    addNew(updatedArray);
   }
 
   useEffect(() => {
@@ -415,7 +426,7 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
           <div className="year-editor-section">
             {selectedRanges.map((range) => {
               return (<div className="year-range">
-                <span className="range">{range}</span>
+                <span className="date-range">{formatDisplayDateRange(range)}</span>
                 <span className="delete-icon">
                   <i className="bi bi-trash" onClick={() => handleDeleteRange(range)}/>
                 </span>
@@ -437,37 +448,3 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
     </Modal>
 </>)
 }
-
-
-{/* 
-    <div className='datepicker'>
-      <div className='dp-start'>
-        <label>Start Date</label>
-        <DatePicker
-          startDate={this.state.startDate}
-          selected={this.state.startDate || maxDate}
-          onChange={(ev, startDate) => this.onDateChange(ev, startDate, 'start')}
-          showMonthDropdown
-          showYearDropdown
-          dropdownMode="select"
-          minDate={minDate}
-          maxDate={this.state.startDateMax || maxDate}
-          >
-        </DatePicker>
-      </div>
-      <div className='dp-end'>
-        <label>End Date</label>
-        <DatePicker
-          endDate={this.state.endDate}
-          selected={this.state.endDate}
-          onChange={(ev, endDate) => this.onDateChange(ev, endDate, 'end')}
-          showMonthDropdown
-          showYearDropdown
-          dropdownMode="select"
-          minDate={this.state.startDate || minDate}
-          maxDate={maxDateEnd}
-        >
-        </DatePicker>
-      </div>
-    </div>
- */}
