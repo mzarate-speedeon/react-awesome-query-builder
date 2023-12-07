@@ -308,8 +308,19 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
 /**
  * Modal to select birthday dates
  */
+function subtractYears(date, years) {
+  date.setFullYear(date.getFullYear() - years);
+  return date;
+}
+
 export function BdaySelector({toggle, addNew, show, currentSelections}) {
   const [selectedRanges, setSelectedRanges] = useState(currentSelections || []);
+  const [startDate, setStartDate] = useState(new Date());
+  const [minDate, setMinDate] = useState(subtractYears(new Date(), 110));
+
+  const handleStartChange = (val) => {
+    console.log("start got:", val)
+  }
 
   return (<>
     <Modal isOpen={show} className="modal-dialog-centered date-picker">
@@ -319,14 +330,14 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
           <div className='dp-start'>
             <label>Start Date</label>
             <DatePicker
-              startDate={null}
-              selected={null}
-              onChange={(ev, startDate) => console.log(ev, startDate, 'start')}
+              startDate={startDate}
+              selected={startDate}
+              onChange={handleStartChange}
               showMonthDropdown
               showYearDropdown
               dropdownMode="select"
-              minDate={null}
-              maxDate={null}
+              minDate={minDate}
+              maxDate={subtractYears(new Date(), 18)}
               >
             </DatePicker>
           </div>
