@@ -110,11 +110,11 @@ export default class MultiSelectWidget extends PureComponent {
       <>
         {!readonly && <button className="add-edit-range" onClick={toggleModal}>Add/Edit</button>}
         {
-          this.state.selectedYearRange.length && <span className="range-wrapper">{this.state.selectedYearRange.map((range) => {
+          this.state.selectedYearRange.length ? (<span className="range-wrapper">{this.state.selectedYearRange.map((range) => {
             return (
               <span className="range-details" key={range}>{range}</span>
             );
-          })}</span>
+          })}</span>) : ""
         }
         { this.state.showModal && <YearsSelector
            show={this.state.showModal}
