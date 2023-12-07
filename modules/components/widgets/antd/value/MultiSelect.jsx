@@ -309,6 +309,8 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
  * Modal to select birthday dates
  */
 export function BdaySelector({toggle, addNew, show, currentSelections}) {
+  const [selectedRanges, setSelectedRanges] = useState(currentSelections || []);
+  
   return (<>
     <Modal isOpen={show} className="modal-dialog-centered date-picker">
       <ModalHeader>Year Person Was Born</ModalHeader>
