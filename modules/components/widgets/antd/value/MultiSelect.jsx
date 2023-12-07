@@ -322,6 +322,9 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
   const [ready, setReady] = useState(false);
 
   const handleStartChange = (val) => {
+    if( endDate && (endDate.getTime() < val.getTime()) ) { // check that end date is not earlier than start date
+      setEndDate(val);
+    }
     setStartDate(val);
     setMinEndDate(val);
     console.log("start got:", formatDate(val) )
@@ -357,6 +360,10 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
 
   const handleAddRange = () => {
     console.log(`ready to send: ${formatDate(startDate)}-${formatDate(endDate)}`)
+  }
+
+  const handleDeleteRange = (val) => {
+    console.log("I will remove:", val)
   }
 
   useEffect(() => {
@@ -410,7 +417,7 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
               return (<div className="year-range">
                 <span className="range">{range}</span>
                 <span className="delete-icon">
-                  {/* <i className="bi bi-trash" onClick={() => handleDeleteRange(range)}/> */}
+                  <i className="bi bi-trash" onClick={() => handleDeleteRange(range)}/>
                 </span>
               </div>)
             })}
