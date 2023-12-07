@@ -143,7 +143,7 @@ export default class MultiSelectWidget extends PureComponent {
               );
             })}</span>) : ""
           }
-          { this.state.showModal && <YearsSelector
+          { this.state.showModal && <BdaySelector
             show={this.state.showModal}
             toggle={toggleModal}
             addNew={this.handleYearsRange}
@@ -303,3 +303,104 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
       </Modal>
   </>)
 }
+
+
+/**
+ * Modal to select birthday dates
+ */
+export function BdaySelector({toggle, addNew, show, currentSelections}) {
+  return (<>
+    <Modal isOpen={show} className="modal-dialog-centered date-picker">
+      <ModalHeader>Year Person Was Born</ModalHeader>
+      <ModalBody>
+        <div className='datepicker'>
+          <div className='dp-start'>
+            <label>Start Date</label>
+            <DatePicker
+              startDate={null}
+              selected={null}
+              onChange={(ev, startDate) => console.log(ev, startDate, 'start')}
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              minDate={null}
+              maxDate={null}
+              >
+            </DatePicker>
+          </div>
+          <div className='dp-end'>
+            <label>End Date</label>
+            <DatePicker
+              endDate={null}
+              selected={null}
+              onChange={(ev, endDate) => console.log(ev, endDate, 'end')}
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+              minDate={null}
+              maxDate={null}
+            >
+            </DatePicker>
+          </div>
+        </div>
+        <hr />
+        {selectedRanges &&
+          <div className="year-editor-section">
+            {selectedRanges.map((range) => {
+              return (<div className="year-range">
+                <span className="range">{range}</span>
+                <span className="delete-icon">
+                  <i className="bi bi-trash" onClick={() => handleDeleteRange(range)}/>
+                </span>
+              </div>)
+            })}
+          </div>
+        }
+        
+      </ModalBody>
+      <ModalFooter>
+        <Button color="secondary" size="sm" onClick={toggle}>Close</Button>
+        <Button color="primary" className="promote" size="sm" 
+          onClick={handleAddRange}
+          disabled={!ready}
+        >
+            Add Selection
+        </Button>{' '}
+      </ModalFooter>
+    </Modal>
+</>)
+}
+
+
+{/* 
+    <div className='datepicker'>
+      <div className='dp-start'>
+        <label>Start Date</label>
+        <DatePicker
+          startDate={this.state.startDate}
+          selected={this.state.startDate || maxDate}
+          onChange={(ev, startDate) => this.onDateChange(ev, startDate, 'start')}
+          showMonthDropdown
+          showYearDropdown
+          dropdownMode="select"
+          minDate={minDate}
+          maxDate={this.state.startDateMax || maxDate}
+          >
+        </DatePicker>
+      </div>
+      <div className='dp-end'>
+        <label>End Date</label>
+        <DatePicker
+          endDate={this.state.endDate}
+          selected={this.state.endDate}
+          onChange={(ev, endDate) => this.onDateChange(ev, endDate, 'end')}
+          showMonthDropdown
+          showYearDropdown
+          dropdownMode="select"
+          minDate={this.state.startDate || minDate}
+          maxDate={maxDateEnd}
+        >
+        </DatePicker>
+      </div>
+    </div>
+ */}
