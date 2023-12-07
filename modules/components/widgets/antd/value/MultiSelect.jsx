@@ -6,6 +6,8 @@ import {mapListValues} from "../../../../utils/stuff";
 import {useOnPropsChanged} from "../../../../utils/reactUtils";
 import omit from "lodash/omit";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Alert, Input } from 'reactstrap';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const Option = Select.Option;
 
@@ -101,7 +103,7 @@ export default class MultiSelectWidget extends PureComponent {
     const dropdownWidth = this.optionsMaxWidth + SELECT_WIDTH_OFFSET_RIGHT;
     const customSelectProps = omit(customProps, ["showCheckboxes"]);
 
-    const bday_range = "ameps__birthday_of_person_with_day_enhanced";
+    const bday_range = "ameps__birthday_of_person_with_day_enhanced"; //yyyymmdd
     const year_range = "ameps__dob_year";
 
     // modal helpers
