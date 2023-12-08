@@ -313,6 +313,7 @@ function subtractYears(date, years) {
   return date;
 }
 
+// format YYYYMMDD into MM/DD/YYYY-MM/DD/YYYY for display
 const formatDisplayDateRange = (date) => {
   if (!date) return;
   let dates = date.split('-');
@@ -321,7 +322,7 @@ const formatDisplayDateRange = (date) => {
   return startDate + ' - ' + endDate;
 }
 
-// format YYYYMMDD into MM/DD/YYYY for display in widget.
+// format YYYYMMDD into MM/DD/YYYY for display
 const formatDisplayDate = (date) => {
   if (!date) return;
   const year = date.substring(0, 4);
@@ -340,20 +341,19 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
   const [ready, setReady] = useState(false);
 
   const handleStartChange = (val) => {
-    if( endDate && (endDate.getTime() < val.getTime()) ) { // check that end date is not earlier than start date
+    // check that end date is not earlier than start date
+    if( endDate && (endDate.getTime() < val.getTime()) ) {
       setEndDate(val);
     }
     setStartDate(val);
     setMinEndDate(val);
-    console.log("start got:", formatDate(val) )
   }
 
   const handleEndChange = (val) => {
     setEndDate(val);
-    console.log("start got:", formatDate(val) )
   }
 
-  // format date into YYYYMMDD for backend. 
+  // format date into YYYYMMDD for backend
   const formatDate = (date) => {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
@@ -430,7 +430,9 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
           </div>
         </div>
         <br />
-        <div>To ensure the targets are adults, the latest date that can be entered is 18 years prior to today's date.</div>
+        <p className="small">
+          To ensure the targets are adults, the latest date that can be entered is 18 years prior to today's date.
+        </p>
         <hr />
         {selectedRanges &&
           <div className="year-editor-section">
