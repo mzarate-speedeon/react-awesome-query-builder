@@ -14,7 +14,6 @@ import BooleanWidget from "./value/Boolean";
 import MultiSelectWidget from "./value/MultiSelect";
 import AutocompleteWidget from "./value/Autocomplete";
 import TreeSelectWidget from "./value/TreeSelect";
-import YearsRangeWidget from "./value/YearsRange";
 
 // field select widgets
 import FieldSelect from "./core/FieldSelect";
@@ -47,7 +46,6 @@ export default {
   MultiSelectWidget,
   AutocompleteWidget,
   TreeSelectWidget,
-  YearsRangeWidget,
 
   FieldSelect,
   FieldDropdown,

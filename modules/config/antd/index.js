@@ -34,7 +34,6 @@ const {
   BooleanWidget,
   TimeWidget,
   DateTimeWidget,
-  YearsRangeWidget,
 } = AntdWidgets;
 
 
@@ -115,10 +114,6 @@ const widgets = {
   datetime: {
     ...BasicConfig.widgets.datetime,
     factory: (props) => <DateTimeWidget {...props} />,
-  },
-  yearsrange: {
-    ...BasicConfig.widgets.datetime,
-    factory: (props) => <YearsRangeWidget {...props} />,
   },
 
   rangeslider: {

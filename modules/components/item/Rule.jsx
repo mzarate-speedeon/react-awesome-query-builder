@@ -302,7 +302,7 @@ class Rule extends PureComponent {
     return (
       <>
         {drag}
-        <div className="rule--body--wrapper something-like">
+        <div className="rule--body--wrapper">
           {body}{error}
         </div>
         <div className="rule--header">

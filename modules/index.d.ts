@@ -325,7 +325,6 @@ export type TextWidgetProps = BaseWidgetProps & TextFieldSettings;
 export type DateTimeWidgetProps = BaseWidgetProps & DateTimeFieldSettings;
 export type BooleanWidgetProps = BaseWidgetProps & BooleanFieldSettings;
 export type NumberWidgetProps = BaseWidgetProps & NumberFieldSettings;
-export type YearsRangeWidgetProps = BaseWidgetProps & NumberFieldSettings;
 export type SelectWidgetProps = BaseWidgetProps & SelectFieldSettings;
 export type TreeSelectWidgetProps = BaseWidgetProps & TreeSelectFieldSettings;
 export type RangeSliderWidgetProps = RangeWidgetProps & NumberFieldSettings;
@@ -375,7 +374,7 @@ export type SelectWidget = BaseWidget & SelectFieldSettings;
 export type TreeSelectWidget = BaseWidget & TreeSelectFieldSettings;
 export type CaseValueWidget = BaseWidget & CaseValueFieldSettings;
 
-export type Widget = FieldWidget |  TextWidget | DateTimeWidget | BooleanWidget | NumberWidget | SelectWidget | TreeSelectWidget  | RangeableWidget | BaseWidget | YearsRangeWidget;
+export type Widget = FieldWidget |  TextWidget | DateTimeWidget | BooleanWidget | NumberWidget | SelectWidget | TreeSelectWidget  | RangeableWidget | BaseWidget;
 export type Widgets = TypedMap<Widget>;
 
 
@@ -972,7 +971,6 @@ export interface BasicConfig extends Config {
     field: FieldWidget,
     func: FieldWidget,
     case_value: CaseValueWidget,
-    yearsrange: YearsRangeWidget,
   },
   types: {
     text: Type,
@@ -986,7 +984,6 @@ export interface BasicConfig extends Config {
     treemultiselect: Type,
     boolean: Type,
     case_value: Type,
-    yearsrange: Type,
   },
   settings: Settings,
 }
@@ -1040,7 +1037,6 @@ export interface AntdWidgets {
   TextWidget: ElementType<TextWidgetProps>,
   TextAreaWidget: ElementType<TextWidgetProps>,
   NumberWidget: ElementType<NumberWidgetProps>,
-  YearsRangeWidget: ElementType<YearsRangeWidgetProps>,
   SliderWidget: ElementType<NumberWidgetProps>,
   RangeWidget: ElementType<RangeSliderWidgetProps>,
   SelectWidget: ElementType<SelectWidgetProps>,
