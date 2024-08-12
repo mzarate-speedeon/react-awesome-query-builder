@@ -103,8 +103,9 @@ export default class MultiSelectWidget extends PureComponent {
     const dropdownWidth = this.optionsMaxWidth + SELECT_WIDTH_OFFSET_RIGHT;
     const customSelectProps = omit(customProps, ["showCheckboxes"]);
 
-    const bday_range = "ameps__birthday_of_person_with_day_enhanced"; //yyyymmdd
-    const year_range = "ameps__dob_year";
+    const bday_range = "ameps__v-epsln-demog-000033"; //yyyymmdd
+    const year_range = "ameps__v-epsln-demog-000031";
+    const age_range = "ameps__v-epsln-demog-000030";
 
     // modal helpers
     const toggleModal = () => {
@@ -153,8 +154,7 @@ export default class MultiSelectWidget extends PureComponent {
       );
     }
     
-    return (<>
-      Field: {field}
+    return (
       <Select
         disabled={readonly}
         mode={allowCustomValues ? "tags" : "multiple"}
@@ -175,7 +175,7 @@ export default class MultiSelectWidget extends PureComponent {
         {...customSelectProps}
       >{this.options}
       </Select>
-    </>);
+    );
   }
 }
 
