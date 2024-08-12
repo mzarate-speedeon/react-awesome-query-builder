@@ -111,8 +111,6 @@ export default class MultiSelectWidget extends PureComponent {
       this.setState({showModal: !this.state.showModal})
     }
 
-    console.log("the field is: ", field)
-
     if(field === year_range) {
       return (
         <>
@@ -155,7 +153,8 @@ export default class MultiSelectWidget extends PureComponent {
       );
     }
     
-    return (
+    return (<>
+      Field: {field}
       <Select
         disabled={readonly}
         mode={allowCustomValues ? "tags" : "multiple"}
@@ -176,7 +175,7 @@ export default class MultiSelectWidget extends PureComponent {
         {...customSelectProps}
       >{this.options}
       </Select>
-    );
+    </>);
   }
 }
 
