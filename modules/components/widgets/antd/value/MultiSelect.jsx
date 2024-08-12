@@ -111,6 +111,8 @@ export default class MultiSelectWidget extends PureComponent {
       this.setState({showModal: !this.state.showModal})
     }
 
+    console.log("the field is: ", field)
+
     if(field === year_range) {
       return (
         <>
