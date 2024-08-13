@@ -82,11 +82,28 @@ export default class MultiSelectWidget extends PureComponent {
   };
 
   handleYearsRange = (val) => {
-    this.setState(() => {
-      return { selectedYearRange: val };
-    }, () => {
-      this.props.setValue(this.state.selectedYearRange);
-    });
+
+    // create an array of values
+    const [start, end] = val.split('|');
+    const startNum = Number(start);
+    const endNum = Number(end);
+    let sequence = [];
+    for (let i = startNum; i <= endNum; i++) {
+        sequence.push(i);
+    }
+
+    // add all values to state
+    sequence.forEach((_val) => {
+      this.props.setValue(_val.toString());
+    })
+
+    this.setState({ selectedYearRange: val  });
+
+    // this.setState(() => {
+    //   return { selectedYearRange: val };
+    // }, () => {
+    //   this.props.setValue(this.state.selectedYearRange);
+    // });
   }
 
   filterOption = (input, option) => {
