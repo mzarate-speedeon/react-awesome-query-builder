@@ -83,6 +83,9 @@ export default class MultiSelectWidget extends PureComponent {
 
   handleYearsRange = (val) => {
 
+    console.log("val", val)
+    return;
+
     // create an array of values
     const [start, end] = val.split('|');
     const startNum = Number(start);
