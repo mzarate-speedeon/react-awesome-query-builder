@@ -105,18 +105,10 @@ export default class MultiSelectWidget extends PureComponent {
     })
     console.log("all_range_values: ", all_range_values)
     
-
-    // // add all values to state
-    // sequence.forEach((_val) => {
-    //   this.props.setValue(_val.toString());
-    // })
-
-    // this.setState({ selectedYearRange: val  });
-
     this.setState(() => {
       return { selectedYearRange: val };
     }, () => {
-      this.props.setValue(this.state.selectedYearRange);
+      this.props.setValue(all_range_values);
     });
   }
 
