@@ -38,7 +38,8 @@ export default class MultiSelectWidget extends PureComponent {
 
   componentDidMount() {
     if(this.props.value) {
-      this.props.setValue(this.props.value)
+      this.props.setValue(this.props.value);
+      this.handleYearsRange(this.props.value);
     }
   }
 
@@ -104,6 +105,10 @@ export default class MultiSelectWidget extends PureComponent {
       })
     })
     console.log("all_range_values: ", all_range_values)
+
+    if(!all_range_values.length && val.length) {
+      all_range_values = val;
+    }
     
     this.setState(() => {
       return { selectedYearRange: val };
