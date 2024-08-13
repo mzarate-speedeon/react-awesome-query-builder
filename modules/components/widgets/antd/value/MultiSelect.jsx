@@ -81,18 +81,30 @@ export default class MultiSelectWidget extends PureComponent {
     }
   };
 
+  createIntRange = (val) => {
+    // create an array of values
+    const [start, end] = val.split('|');
+    const startNum = Number(start);
+    const endNum = Number(end);
+    let sequence = [];
+    for (let i = startNum; i <= endNum; i++) {
+      sequence.push(i);
+    }
+    return sequence;
+  }
+
   handleYearsRange = (val) => {
 
-    console.log("val", val)
-
-    // create an array of values
-    // const [start, end] = val.split('|');
-    // const startNum = Number(start);
-    // const endNum = Number(end);
-    // let sequence = [];
-    // for (let i = startNum; i <= endNum; i++) {
-    //     sequence.push(i);
-    // }
+    console.log("val: ", val)
+    let all_range_values = [];
+    val.length && val.forEach((_el) => {
+      let _temp = this.createIntRange(_el);
+      _temp.length && _temp.forEach((item) => {
+        all_range_values.push(item.toString());
+      })
+    })
+    console.log("all_range_values: ", all_range_values)
+    
 
     // // add all values to state
     // sequence.forEach((_val) => {
