@@ -153,9 +153,10 @@ export default class MultiSelectWidget extends PureComponent {
               );
             })}</span>) : ""
           }
-          {(readonly && _selectedYearRange.length) ? (
-            <span className="range">{_selectedYearRange[0]}|{_selectedYearRange[_selectedYearRange.length - 1]}</span>
-          ) : (
+          {(readonly && _selectedYearRange.length) && (
+            <Select disabled>{_selectedYearRange[0]}|{_selectedYearRange[_selectedYearRange.length - 1]}</Select>
+          )}
+          {!readonly && (
             this.state.showModal && <YearsSelector
               show={this.state.showModal}
               toggle={toggleModal}
