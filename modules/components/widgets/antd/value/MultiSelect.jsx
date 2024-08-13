@@ -135,6 +135,8 @@ export default class MultiSelectWidget extends PureComponent {
     const year_range = "ameps__v-epsln-demog-000031";
     const age_range = "ameps__v-epsln-demog-000030";
 
+    const _selectedYearRange = this.state.selectedYearRange;
+
     // modal helpers
     const toggleModal = () => {
       this.setState({showModal: !this.state.showModal})
@@ -152,7 +154,7 @@ export default class MultiSelectWidget extends PureComponent {
             })}</span>) : ""
           }
           {!readonly ? (
-            <span className="range">{this.state.selectedYearRange[0]}|{this.state.selectedYearRange[array.length - 1]}</span>
+            <span className="range">{_selectedYearRange[0]}|{_selectedYearRange[_selectedYearRange.length - 1]}</span>
           ) : (
             this.state.showModal && <YearsSelector
               show={this.state.showModal}
