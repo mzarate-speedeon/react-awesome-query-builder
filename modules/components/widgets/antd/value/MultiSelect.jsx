@@ -246,7 +246,7 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
   }, [startYear])
 
   useEffect(() => {
-    if(startYear && endYear) {
+    if(startYear && endYear && (endYear >= startYear)) {
       setReady(true);
     } else {
       setReady(false);
@@ -282,7 +282,7 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
           {selectedRanges &&
             <div className="year-editor-section">
               {selectedRanges.map((range) => {
-                return (<div className="year-range">
+                return (<div className="year-range" key={range + Math.random()}>
                   <span className="range">{range}</span>
                   <span className="delete-icon">
                     <i className="bi bi-trash" onClick={() => handleDeleteRange(range)}/>
@@ -439,7 +439,7 @@ export function BdaySelector({toggle, addNew, show, currentSelections}) {
         {selectedRanges &&
           <div className="year-editor-section">
             {selectedRanges.map((range) => {
-              return (<div className="year-range">
+              return (<div className="year-range" key={range + Math.random()}>
                 <span className="date-range">{formatDisplayDateRange(range)}</span>
                 <span className="delete-icon">
                   <i className="bi bi-trash" onClick={() => handleDeleteRange(range)}/>
