@@ -182,23 +182,12 @@ export default class MultiSelectWidget extends PureComponent {
 
 
 /**
- * Modal to select range of years
+ * Modal to select range of numbers
  */
-let currentDate = new Date();
-let currentYear = currentDate.getFullYear();
-let allYears = [];
-function populateYears() {
-  for (let i = (currentYear - 110); i <= (currentYear); i++) {
-    allYears.push(i);
-  }
-}
-populateYears();
-allYears.reverse();
 
 export function YearsSelector({toggle, addNew, show, currentSelections}) {
 
   const [selectedRanges, setSelectedRanges] = useState(currentSelections || []);
-  const [endYearList, setEndYearList] = useState(allYears);
   const [startYear, setStartYear] = useState();
   const [endYear, setEndYear] = useState();
   const [ready, setReady] = useState(false);
@@ -208,7 +197,9 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
 
   const handleAddRange = () => {
     if (startYearRef.current.value && endYearRef.current.value) {
-      let newRange = `${startYearRef.current.value}|${endYearRef.current.value}`;
+      let start_value = startYearRef.current.value[0] === '0' ? startYearRef.current.value : ('0' + startYearRef.current.value);
+      let end_value = endYearRef.current.value[0] === '0' ? endYearRef.current.value : ('0' + endYearRef.current.value);
+      let newRange = `${start_value}|${end_value}`;
       if(!selectedRanges.includes(newRange)) {
         let updatedState = [...selectedRanges, newRange];
         setSelectedRanges(updatedState);
@@ -233,18 +224,6 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
     addNew(updatedArray);
   }
 
-  // useEffect(() => {
-  //   if(startYear) {
-  //     const reducedList = allYears.filter(checkYears);
-  //     function checkYears(year) {
-  //       return parseInt(year) >= parseInt(startYear);
-  //     }
-  //     setEndYearList(reducedList); // only years after the starting year
-  //   } else {
-  //     setEndYearList(allYears); // all years
-  //   }
-  // }, [startYear])
-
   useEffect(() => {
     if(startYear && endYear && (endYear >= startYear)) {
       setReady(true);
@@ -255,17 +234,11 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
 
   return (<>
       <Modal isOpen={show} className="modal-dialog-centered date-picker">
-        <ModalHeader>Year Person Was Born</ModalHeader>
+        <ModalHeader>Values Range</ModalHeader>
         <ModalBody>
           <div className='input-range custom-select'>
             <div className='ir-start'>
               <label>Start Value</label>
-              {/* <select ref={startYearRef} onChange={handleUpdateStartYear}>
-                <option key={`default-start`} value={0}>Select a value</option>
-                {allYears.map((year) => {
-                  return <option key={`${year}-start`} value={year}>{year}</option>;
-                })}
-              </select> */}
               <input 
                 type="text" 
                 ref={startYearRef} 
@@ -276,12 +249,6 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
             <i className="bi bi-arrow-right"></i>
             <div className='ir-end'>
               <label>End Value</label>
-              {/* <select ref={endYearRef} onChange={handleUpdateEndYear}>
-                <option key={`default-end`} value={0}>Select a value</option>
-                {endYearList.map((year) => {
-                  return <option key={`${year}-end`} value={year}>{year}</option>;
-                })}
-              </select> */}
               <input 
                 type="text" 
                 ref={endYearRef} 
