@@ -113,6 +113,17 @@ export default class MultiSelectWidget extends PureComponent {
       this.setState({showModal: !this.state.showModal})
     }
 
+    let currentRangeSelections = this.state.selectedYearRange.map(item => 
+      item
+        .split('|') // split each string by '|'
+        .map(value => value.startsWith('0') ? value.slice(1) : value) // remove leading '0' if present
+        .join('|') // join the values back together with '|'
+    );
+
+    console.log("selections: ", currentRangeSelections)
+
+    
+
     if(field === year_range || field === age_range) {
       return (
         <>
