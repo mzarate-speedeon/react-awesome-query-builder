@@ -233,17 +233,17 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
     addNew(updatedArray);
   }
 
-  useEffect(() => {
-    if(startYear) {
-      const reducedList = allYears.filter(checkYears);
-      function checkYears(year) {
-        return parseInt(year) >= parseInt(startYear);
-      }
-      setEndYearList(reducedList); // only years after the starting year
-    } else {
-      setEndYearList(allYears); // all years
-    }
-  }, [startYear])
+  // useEffect(() => {
+  //   if(startYear) {
+  //     const reducedList = allYears.filter(checkYears);
+  //     function checkYears(year) {
+  //       return parseInt(year) >= parseInt(startYear);
+  //     }
+  //     setEndYearList(reducedList); // only years after the starting year
+  //   } else {
+  //     setEndYearList(allYears); // all years
+  //   }
+  // }, [startYear])
 
   useEffect(() => {
     if(startYear && endYear && (endYear >= startYear)) {
@@ -260,22 +260,34 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
           <div className='input-range custom-select'>
             <div className='ir-start'>
               <label>Start Value</label>
-              <select ref={startYearRef} onChange={handleUpdateStartYear}>
+              {/* <select ref={startYearRef} onChange={handleUpdateStartYear}>
                 <option key={`default-start`} value={0}>Select a value</option>
                 {allYears.map((year) => {
                   return <option key={`${year}-start`} value={year}>{year}</option>;
                 })}
-              </select>
+              </select> */}
+              <input 
+                type="text" 
+                ref={startYearRef} 
+                onChange={handleUpdateStartYear} 
+                placeholder="Enter a value"
+              />
             </div>
             <i className="bi bi-arrow-right"></i>
             <div className='ir-end'>
               <label>End Value</label>
-              <select ref={endYearRef} onChange={handleUpdateEndYear}>
+              {/* <select ref={endYearRef} onChange={handleUpdateEndYear}>
                 <option key={`default-end`} value={0}>Select a value</option>
                 {endYearList.map((year) => {
                   return <option key={`${year}-end`} value={year}>{year}</option>;
                 })}
-              </select>
+              </select> */}
+              <input 
+                type="text" 
+                ref={endYearRef} 
+                onChange={handleUpdateEndYear} 
+                placeholder="Enter a value"
+              />
             </div>
           </div>
           <hr />
