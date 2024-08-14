@@ -113,7 +113,7 @@ export default class MultiSelectWidget extends PureComponent {
       this.setState({showModal: !this.state.showModal})
     }
 
-    if(field === year_range) {
+    if(field === year_range || field === age_range) {
       return (
         <>
           {!readonly && <button className="add-edit-range" onClick={toggleModal}>Add/Edit</button>}
