@@ -137,6 +137,8 @@ export default class MultiSelectWidget extends PureComponent {
 
     const _selectedYearRange = this.state.selectedYearRange;
 
+    console.log("query builder config", config)
+
     // modal helpers
     const toggleModal = () => {
       this.setState({showModal: !this.state.showModal})
