@@ -82,38 +82,11 @@ export default class MultiSelectWidget extends PureComponent {
     }
   };
 
-  createIntRange = (val) => {
-    // create an array of values
-    const [start, end] = val.split('|');
-    const startNum = Number(start);
-    const endNum = Number(end);
-    let sequence = [];
-    for (let i = startNum; i <= endNum; i++) {
-      sequence.push(i);
-    }
-    return sequence;
-  }
-
   handleYearsRange = (val) => {
-
-    console.log("val: ", val)
-    let all_range_values = [];
-    val.length && val.forEach((_el) => {
-      let _temp = this.createIntRange(_el);
-      _temp.length && _temp.forEach((item) => {
-        all_range_values.push(item.toString());
-      })
-    })
-    console.log("all_range_values: ", all_range_values)
-
-    if(!all_range_values.length && val.length) {
-      all_range_values = val;
-    }
-    
     this.setState(() => {
       return { selectedYearRange: val };
     }, () => {
-      this.props.setValue(all_range_values);
+      this.props.setValue(this.state.selectedYearRange);
     });
   }
 
@@ -135,10 +108,6 @@ export default class MultiSelectWidget extends PureComponent {
     const year_range = "ameps__v-epsln-demog-000031";
     const age_range = "ameps__v-epsln-demog-000030";
 
-    const _selectedYearRange = this.state.selectedYearRange;
-
-    console.log("query builder config", config)
-
     // modal helpers
     const toggleModal = () => {
       this.setState({showModal: !this.state.showModal})
@@ -155,17 +124,12 @@ export default class MultiSelectWidget extends PureComponent {
               );
             })}</span>) : ""
           }
-          {(readonly && _selectedYearRange.length) && (
-            <Select disabled>{_selectedYearRange[0]}|{_selectedYearRange[_selectedYearRange.length - 1]}</Select>
-          )}
-          {!readonly && (
-            this.state.showModal && <YearsSelector
-              show={this.state.showModal}
-              toggle={toggleModal}
-              addNew={this.handleYearsRange}
-              currentSelections={this.state.selectedYearRange}
-            />
-          )}
+          { this.state.showModal && <YearsSelector
+            show={this.state.showModal}
+            toggle={toggleModal}
+            addNew={this.handleYearsRange}
+            currentSelections={this.state.selectedYearRange}
+          />}
         </>
       );
     }
