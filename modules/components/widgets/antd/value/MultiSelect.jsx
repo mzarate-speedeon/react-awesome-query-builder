@@ -113,23 +113,20 @@ export default class MultiSelectWidget extends PureComponent {
       this.setState({showModal: !this.state.showModal})
     }
 
+    // remove leading zeros before displaying
     let currentRangeSelections = this.state.selectedYearRange.map(item => 
       item
-        .split('|') // split each string by '|'
+        .split('|') // split each range by '|'
         .map(value => value.startsWith('0') ? value.slice(1) : value) // remove leading '0' if present
         .join('|') // join the values back together with '|'
     );
-
-    console.log("selections: ", currentRangeSelections)
-
-    
 
     if(field === year_range || field === age_range) {
       return (
         <>
           {!readonly && <button className="add-edit-range" onClick={toggleModal}>Add/Edit</button>}
           {
-            this.state.selectedYearRange.length ? (<span className="range-wrapper">{this.state.selectedYearRange.map((range) => {
+            currentRangeSelections.length ? (<span className="range-wrapper">{currentRangeSelections.map((range) => {
               return (
                 <span className="range-details" key={range}>{range}</span>
               );
@@ -139,7 +136,7 @@ export default class MultiSelectWidget extends PureComponent {
             show={this.state.showModal}
             toggle={toggleModal}
             addNew={this.handleYearsRange}
-            currentSelections={this.state.selectedYearRange}
+            currentSelections={currentRangeSelections}
           />}
         </>
       );
