@@ -197,8 +197,8 @@ export function YearsSelector({toggle, addNew, show, currentSelections}) {
 
   const handleAddRange = () => {
     if (startYearRef.current.value && endYearRef.current.value) {
-      let start_value = startYearRef.current.value[0] === '0' ? startYearRef.current.value : ('0' + startYearRef.current.value);
-      let end_value = endYearRef.current.value[0] === '0' ? endYearRef.current.value : ('0' + endYearRef.current.value);
+      let start_value = startYearRef.current.value;
+      let end_value = endYearRef.current.value;
       let newRange = `${start_value}|${end_value}`;
       if(!selectedRanges.includes(newRange)) {
         let updatedState = [...selectedRanges, newRange];
